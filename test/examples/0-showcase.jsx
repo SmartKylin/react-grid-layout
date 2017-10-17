@@ -30,12 +30,12 @@ class ShowcaseLayout extends React.Component {
   }
 
   generateDOM() {
-    return _.map(this.state.layouts.lg, function (l, i) {
+    return _.map(this.state.layouts.lg, function (l) {
       return (
-        <div key={i} className={l.static ? 'static' : ''}>
+        <div key={l.i} className={l.static ? 'static' : ''}>
           {l.static ?
-            <span className="text" title="This item is static and cannot be removed or resized.">Static - {i}</span>
-            : <span className="text">{i}</span>
+            <span className="text" title="This item is static and cannot be removed or resized.">Static - {l.i}</span>
+            : <span className="text">{l.i}</span>
           }
         </div>);
     });
@@ -60,7 +60,7 @@ class ShowcaseLayout extends React.Component {
 
   onNewLayout = () => {
     this.setState({
-      layouts: {lg: generateLayout()}
+      layouts: {lg: generateLayout(true)}
     });
   };
 
@@ -95,18 +95,48 @@ class ShowcaseLayout extends React.Component {
 
 module.exports = ShowcaseLayout;
 
-function generateLayout() {
-  return _.map(_.range(0, 25), function (item, i) {
-    var y = Math.ceil(Math.random() * 4) + 1;
-    return {
-      x: _.random(0, 5) * 2 % 12,
-      y: Math.floor(i / 6) * y,
-      w: 2,
-      h: y,
-      i: i.toString(),
-      static: Math.random() < 0.05
-    };
-  });
+function generateLayout(change) {
+  if (change) {
+    return [
+      {
+        x: 0,
+        y: 0,
+        w: 4,
+        h: 4,
+        i: 'C',
+      },
+      {
+        x: 0,
+        y: 0,
+        w: 12,
+        h: 1,
+        i: 'A',
+      },
+      {
+        x: 6,
+        y: 1,
+        w: 4,
+        h: 1,
+        i: 'B',
+      }
+    ];
+  }
+  return [
+    {
+      x: 0,
+      y: 0,
+      w: 12,
+      h: 1,
+      i: 'A',
+    },
+    {
+      x: 6,
+      y: 1,
+      w: 4,
+      h: 1,
+      i: 'B',
+    }
+  ];
 }
 
 if (require.main === module) {
