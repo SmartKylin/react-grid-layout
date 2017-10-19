@@ -4,6 +4,8 @@ import _ from 'lodash';
 import {Responsive, WidthProvider} from 'react-grid-layout';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
+const testLayout = [];
+
 class ShowcaseLayout extends React.Component {
 
   static propTypes = {
@@ -97,62 +99,49 @@ module.exports = ShowcaseLayout;
 
 function generateLayout(change) {
   if (change) {
-    return [
-      {
+    testLayout.unshift({
         x: 0,
         y: 0,
         w: 4,
-        h: 4,
-        i: 'C',
-      },
-      {
+        h: 6,
+        i: 'C' + testLayout.length,
+      });
+  }
+
+  if (testLayout.length === 0) {
+    testLayout.unshift({
         x: 0,
         y: 0,
         w: 12,
         h: 1,
         i: 'A',
-      },
-      {
+      });
+    testLayout.unshift({
         x: 6,
         y: 1,
         w: 4,
         h: 1,
         i: 'B',
-      }
-    ];
+      });
   }
-  return [
-    {
-      x: 0,
-      y: 0,
-      w: 12,
-      h: 1,
-      i: 'A',
-    },
-    {
-      x: 6,
-      y: 1,
-      w: 4,
-      h: 1,
-      i: 'B',
-    }
-  ];
+
+  return _.cloneDeep(testLayout);
 }
 
-// function generateLayout() {
-//   return _.map(_.range(0, 25), function (item, i) {
-//     var y = Math.ceil(Math.random() * 4) + 1;
-//     return {
-//       x: _.random(0, 5) * 2 % 12,
-//       y: Math.floor(i / 6) * y,
-//       w: 2,
-//       h: y,
-//       i: i.toString(),
-//       static: Math.random() < 0.05
-//     };
-//   });
-// }
+  // function generateLayout() {
+  //   return _.map(_.range(0, 25), function (item, i) {
+  //     var y = Math.ceil(Math.random() * 4) + 1;
+  //     return {
+  //       x: _.random(0, 5) * 2 % 12,
+  //       y: Math.floor(i / 6) * y,
+  //       w: 2,
+  //       h: y,
+  //       i: i.toString(),
+  //       static: Math.random() < 0.05
+  //     };
+  //   });
+  // }
 
-if (require.main === module) {
-  require('../test-hook.jsx')(module.exports);
-}
+  if (require.main === module) {
+    require('../test-hook.jsx')(module.exports);
+  }
